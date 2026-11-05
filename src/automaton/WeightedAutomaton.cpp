@@ -3,10 +3,10 @@
 
 #include <stdexcept>
 
-WeightedAutomaton::WeightedAutomaton(
-    const std::vector<Symbol>& alphabet
-) {
-    for (Symbol symbol : alphabet) {
+WeightedAutomaton::WeightedAutomaton( const std::vector<Symbol>& alphabet)
+{
+    for (Symbol symbol : alphabet) 
+    {
         auto [it, inserted] = alphabet_.insert(symbol);
 
         if (!inserted) {
@@ -17,9 +17,8 @@ WeightedAutomaton::WeightedAutomaton(
     }
 }
 
-void WeightedAutomaton::validateState(
-    StateId state
-) const {
+void WeightedAutomaton::validateState(StateId state) const 
+{
     if (state >= states_.size()) {
         throw std::out_of_range(
             "Invalid state identifier"
@@ -27,9 +26,8 @@ void WeightedAutomaton::validateState(
     }
 }
 
-void WeightedAutomaton::validateSymbol(
-    Symbol symbol
-) const {
+void WeightedAutomaton::validateSymbol(Symbol symbol) const 
+{
     if (!alphabet_.contains(symbol)) {
         throw std::invalid_argument(
             "Symbol does not belong to the alphabet"
@@ -37,32 +35,23 @@ void WeightedAutomaton::validateSymbol(
     }
 }
 
-StateId WeightedAutomaton::addState(
-    Weight finalWeight
-) {
+StateId WeightedAutomaton::addState( Weight finalWeight)
+{
     StateId id = states_.size();
 
-    states_.push_back(State{
-        finalWeight,
-        {}
-    });
+    states_.push_back(State{finalWeight, {}});
 
     return id;
 }
 
-void WeightedAutomaton::setInitialState(
-    StateId state
-) {
+void WeightedAutomaton::setInitialState(StateId state)
+{
     validateState(state);
     initialState_ = state;
 }
 
-void WeightedAutomaton::addTransition(
-    StateId source,
-    Symbol symbol,
-    StateId target,
-    Weight weight
-) {
+void WeightedAutomaton::addTransition(StateId source, Symbol symbol, StateId target, Weight weight)
+{
     validateState(source);
     validateState(target);
     validateSymbol(symbol);
@@ -80,20 +69,16 @@ void WeightedAutomaton::addTransition(
     }
 }
 
-bool WeightedAutomaton::hasTransition(
-    StateId state,
-    Symbol symbol
-) const {
+bool WeightedAutomaton::hasTransition(StateId state, Symbol symbol) const 
+{
     validateState(state);
     validateSymbol(symbol);
 
     return states_[state].transitions.contains(symbol);
 }
 
-StateId WeightedAutomaton::nextState(
-    StateId state,
-    Symbol symbol
-) const {
+StateId WeightedAutomaton::nextState(StateId state, Symbol symbol) const
+{
     validateState(state);
     validateSymbol(symbol);
 
@@ -108,10 +93,8 @@ StateId WeightedAutomaton::nextState(
     return it->second.target;
 }
 
-Weight WeightedAutomaton::transitionWeight(
-    StateId state,
-    Symbol symbol
-) const {
+Weight WeightedAutomaton::transitionWeight(StateId state, Symbol symbol) const 
+{
     validateState(state);
     validateSymbol(symbol);
 
@@ -126,14 +109,14 @@ Weight WeightedAutomaton::transitionWeight(
     return it->second.weight;
 }
 
-Weight WeightedAutomaton::finalWeight(
-    StateId state
-) const {
+Weight WeightedAutomaton::finalWeight(StateId state) const 
+{
     validateState(state);
     return states_[state].finalWeight;
 }
 
-StateId WeightedAutomaton::initialState() const {
+StateId WeightedAutomaton::initialState() const 
+{
     if (!initialState_.has_value()) {
         throw std::runtime_error(
             "Initial state has not been set"
@@ -147,9 +130,8 @@ std::size_t WeightedAutomaton::numberOfStates() const {
     return states_.size();
 }
 
-Weight WeightedAutomaton::evaluate(
-    const Word& word
-) const {
+Weight WeightedAutomaton::evaluate(const Word& word) const 
+{
     if (!initialState_.has_value()) {
         throw std::runtime_error(
             "Initial state has not been set"
