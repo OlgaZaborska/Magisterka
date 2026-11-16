@@ -3,7 +3,11 @@
 
 #include <stdexcept>
 
-WeightedAutomaton::WeightedAutomaton( const std::vector<Symbol>& alphabet)
+WeightedAutomaton::WeightedAutomaton(
+    const std::vector<Symbol>& alphabet,
+    const WeightAlgebra& algebra
+)
+    : algebra_(algebra)
 {
     for (Symbol symbol : alphabet) 
     {

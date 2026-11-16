@@ -7,7 +7,8 @@
 #include <stdexcept>
 
 void testEmptyWord() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(5);
     automaton.setInitialState(q0);
@@ -18,7 +19,8 @@ void testEmptyWord() {
 }
 
 void testSingleSymbol() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(5);
     StateId q1 = automaton.addState(7);
@@ -34,7 +36,8 @@ void testSingleSymbol() {
 }
 
 void testMultipleSymbols() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(5);
     StateId q1 = automaton.addState(7);
@@ -60,7 +63,8 @@ void testMultipleSymbols() {
 }
 
 void testNegativeWeights() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(-5);
     StateId q1 = automaton.addState(2);
@@ -76,7 +80,8 @@ void testNegativeWeights() {
 }
 
 void testMissingTransition() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(0);
     automaton.setInitialState(q0);
@@ -96,7 +101,8 @@ void testMissingTransition() {
 }
 
 void testInvalidSymbol() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     StateId q0 = automaton.addState(0);
     automaton.setInitialState(q0);
@@ -116,7 +122,8 @@ void testInvalidSymbol() {
 }
 
 void testDuplicateTransition() {
-    WeightedAutomaton automaton({'a'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a'}, algebra);
 
     StateId q0 = automaton.addState(0);
     StateId q1 = automaton.addState(0);

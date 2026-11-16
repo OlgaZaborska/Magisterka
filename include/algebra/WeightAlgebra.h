@@ -13,6 +13,11 @@ public:
         Weight b
     ) const = 0;
 
+    virtual Weight residual(
+        Weight a,
+        Weight b
+    ) const = 0;    
+
     virtual bool equal(
         Weight a,
         Weight b

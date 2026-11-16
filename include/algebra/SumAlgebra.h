@@ -14,6 +14,13 @@ public:
         return a + b;
     }
 
+    Weight residual(
+        Weight a,
+        Weight b
+    ) const override {
+        return a - b;
+    }
+    
     bool equal(
         Weight a,
         Weight b

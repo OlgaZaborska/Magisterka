@@ -2,7 +2,7 @@
 #pragma once
 
 #include "core/Types.h"
-#include "algebra/SumAlgebra.h"
+#include "algebra/WeightAlgebra.h"
 
 #include <optional>
 #include <unordered_map>
@@ -22,7 +22,7 @@ struct State {
 
 class WeightedAutomaton {
 private:
-    SumAlgebra algebra_;
+    const WeightAlgebra& algebra_;
 
     std::unordered_set<Symbol> alphabet_;
     std::vector<State> states_;
@@ -34,7 +34,8 @@ private:
 
 public:
     explicit WeightedAutomaton(
-        const std::vector<Symbol>& alphabet
+        const std::vector<Symbol>& alphabet,
+        const WeightAlgebra& algebra
     );
 
     StateId addState(Weight finalWeight);
