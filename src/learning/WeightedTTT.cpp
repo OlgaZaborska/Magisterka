@@ -25,10 +25,16 @@ bool WeightedTTT::refine(const Word& counterexample) {
             counterexample.begin(),
             counterexample.begin() + prefixLength
         );
+        const std::size_t leavesBeforeSift =
+            discriminationTree_.accessSequences().size();
         AccessSequence oldAccessSequence =
             discriminationTree_.sift(prefix);
 
         if (oldAccessSequence.word() == prefix) {
+            if (discriminationTree_.accessSequences().size() >
+                leavesBeforeSift) {
+                return true;
+            }
             continue;
         }
 

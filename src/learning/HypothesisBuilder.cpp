@@ -58,15 +58,32 @@ WeightedAutomaton HypothesisBuilder::build(
 
     hypothesis.setInitialState(initialStateId);
 
-    for (const AccessSequence& sequence : accessSequences) {
+    for (std::size_t sequenceIndex = 0;
+         sequenceIndex < accessSequences.size();
+         ++sequenceIndex) {
+        const AccessSequence sequence = accessSequences[sequenceIndex];
         StateId sourceState = stateIds.at(sequence.word());
-
         for (Symbol symbol : alphabet) {
             AccessSequence extendedSequence =
                 sequence.extend(symbol);
 
             AccessSequence targetSequence =
                 discriminationTree_.sift(extendedSequence.word());
+
+            for (const AccessSequence& discoveredSequence :
+                 discriminationTree_.accessSequences()) {
+                if (stateIds.contains(discoveredSequence.word())) {
+                    continue;
+                }
+
+                StateId discoveredState =
+                    hypothesis.addState(0);
+                stateIds.emplace(
+                    discoveredSequence.word(),
+                    discoveredState
+                );
+                accessSequences.push_back(discoveredSequence);
+            }
 
             auto targetState = stateIds.find(targetSequence.word());
 

@@ -72,9 +72,16 @@ AccessSequence DiscriminationTree::sift(const Word& word) {
         auto it = current->children.find(result);
 
         if (it == current->children.end()) {
-            throw std::runtime_error(
-                "No matching branch in discrimination tree"
+            auto [newBranch, inserted] = current->children.emplace(
+                result,
+                std::make_unique<Node>(AccessSequence(word))
             );
+            if (!inserted) {
+                throw std::runtime_error(
+                    "Failed to add a discrimination tree branch"
+                );
+            }
+            return newBranch->second->accessSequence.value();
         }
 
         current = it->second.get();
