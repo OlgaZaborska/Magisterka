@@ -14,6 +14,7 @@ enable_testing()
 
 add_library(weighted_automaton
     src/automaton/WeightedAutomaton.cpp
+    src/automaton/RandomAutomatonGenerator.cpp
     src/learning/DiscriminationTree.cpp
     src/learning/WeightedTTT.cpp
     src/oracle/AutomatonOracle.cpp
@@ -120,11 +121,34 @@ add_test(
     COMMAND weighted_ttt_tests
 )
 
+# Random automaton generation tests
+add_executable(random_automaton_generator_tests
+    tests/RandomAutomatonGeneratorTests.cpp
+)
+
+target_link_libraries(random_automaton_generator_tests
+    PRIVATE weighted_automaton
+)
+
+add_test(
+    NAME RandomAutomatonGeneratorTests
+    COMMAND random_automaton_generator_tests
+)
+
 # Example application
 add_executable(example
     main.cpp
 )
 
 target_link_libraries(example
+    PRIVATE weighted_automaton
+)
+
+# Random automaton learning simulation
+add_executable(random_learning_simulation
+    experiments/RandomLearningSimulation.cpp
+)
+
+target_link_libraries(random_learning_simulation
     PRIVATE weighted_automaton
 )

@@ -1,10 +1,12 @@
 
 #include "automaton/WeightedAutomaton.h"
+#include "algebra/SumAlgebra.h"
 
 #include <iostream>
 
 int main() {
-    WeightedAutomaton automaton({'a', 'b'});
+    SumAlgebra algebra;
+    WeightedAutomaton automaton({'a', 'b'}, algebra);
 
     // Tworzenie stanów.
     StateId q0 = automaton.addState(5);

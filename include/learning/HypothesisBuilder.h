@@ -3,6 +3,7 @@
 #include "learning/DiscriminationTree.h"
 #include "learning/ResidualFunction.h"
 #include "automaton/WeightedAutomaton.h"
+#include "core/WordPairAdvice.h"
 
 #include <vector>
 
@@ -18,6 +19,7 @@ public:
     );
 
     WeightedAutomaton build(
-        const std::vector<Symbol>& alphabet
+        const std::vector<Symbol>& alphabet,
+        const WordPairAdvice* advice = nullptr
     );
 };

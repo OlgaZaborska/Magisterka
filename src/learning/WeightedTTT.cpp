@@ -7,12 +7,14 @@ WeightedTTT::WeightedTTT(
     MembershipOracle& membershipOracle,
     EquivalenceOracle& equivalenceOracle,
     const WeightAlgebra& algebra,
-    const std::vector<Symbol>& alphabet
+    const std::vector<Symbol>& alphabet,
+    std::optional<WordPairAdvice> advice
 )
     : membershipOracle_(membershipOracle),
       equivalenceOracle_(equivalenceOracle),
       algebra_(algebra),
       alphabet_(alphabet),
+      advice_(advice),
       residualFunction_(membershipOracle_, algebra_),
       discriminationTree_(AccessSequence{}, residualFunction_) {
 }
@@ -74,7 +76,9 @@ WeightedAutomaton WeightedTTT::learn() {
             residualFunction_,
             discriminationTree_
         );
-        WeightedAutomaton hypothesis = builder.build(alphabet_);
+        const WordPairAdvice* advice =
+            advice_.has_value() ? &advice_.value() : nullptr;
+        WeightedAutomaton hypothesis = builder.build(alphabet_, advice);
 
         std::optional<Word> counterexample =
             equivalenceOracle_.findCounterexample(hypothesis);
